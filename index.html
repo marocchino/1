@@ -1,43 +1,36 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8"> 
+<meta charset="utf-8">
 <head>
 	<title>일하세요</title>
 
 	<link rel="stylesheet" href="./style.css">
 	<meta name="viewport" content="width=device-width">
-	
+
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script>
 	$(function() {
-		if(location.hash !== "") {
-		    showImage(location.hash.substr(1));
+		function showImage() {
+			var idx = location.hash.substr(1);
+			if(idx === "") return;
+			$(".bigimages img").attr("src", "images/image" + idx + ".gif");
+			$(".links .active").removeClass("active");
+			var link = $(".links a:nth-child(" + idx + ")");
+			link.addClass("active");
+			$('.links').addClass("hide");
+			var title = link.html();
+			$('.mobile-title a').html(title);
 		}
+		showImage();
+		$(window).on("hashchange", showImage);
 
-		function showImage(idx) {
-		    $(".bigimages img").attr("src", "images/image" + idx + ".gif");
-		    $(".links .active").removeClass("active");
-		    var link = $(".links a:nth-child(" + idx + ")");
-		    link.addClass("active");
-		    $('.links').addClass("hide")
-		    var title = link.html();
-		    $('.mobile-title a').html(title);
-		}
-
-		$(window).on("hashchange", function() {
-		    var idx = location.hash.substr(1);
-		    if(idx === "") return;
-		    
-		    showImage(idx);
-		});
-		
 		$('.mobile-title a').click(function(e) {
 			e.preventDefault();
 			$('.links').toggleClass("hide");
 		});
 	});
 	</script>
-	
+
 </head>
 <body>
 
@@ -63,7 +56,7 @@
 	</div>
 
 	<div class="bigimages">
-	    <img src="images/image1.gif" alt=""/>
+		<img src="images/image1.gif" alt=""/>
 	</div>
 
 	<div class="clear"></div>
